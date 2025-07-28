@@ -1,0 +1,37 @@
+الحصول على رابط الـ Mock API:
+https://77d5b9ed-baf0-467a-bb0a-afa50de829c8.mock.pstmn.io
+electronic-devices-project/
+│
+├── public/
+│   └── index.html
+│
+├── src/
+│   ├── api.js
+│   ├── main.jsx
+│   ├── App.jsx
+│   ├── i18n.js
+│   ├── assets/
+│   │   └── logo.png
+│   ├── components/
+│   │   ├── Header.jsx
+│   │   ├── Footer.jsx
+│   │   └── Sidebar.jsx
+│   ├── dashboard/
+│   │   ├── DashboardHome.jsx
+│   │   ├── ManageCategories.jsx
+│   │   ├── ManageProducts.jsx
+│   │   └── ComplaintsPage.jsx
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── Products.jsx
+│   │   ├── ProductDetails.jsx
+│   │   ├── Cart.jsx
+│   │   ├── Login.jsx
+│   │   ├── RegisterPage.jsx
+│   │   └── OrdersPage.jsx
+│   └── router/
+│       ├── routes.jsx
+│       └── dashboardRoutes.jsx
+│
+├── package.json
+└── vite.config.js
