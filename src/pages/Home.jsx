@@ -1,17 +1,16 @@
 // src/pages/Home.jsx
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // استايلات الشريحة
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // تحميل البيانات من Mock API
-  // 
+  // جلب البيانات من API
   useEffect(() => {
-    fetch('https://1ea748ea-584e-47bd-8ce0-b02a6dda3aa4.mock.pstmn.io/products')
+    fetch('https://688518c9f52d34140f69212f.mockapi.io/marketing/api/v1/products')
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -20,9 +19,11 @@ const Home = () => {
           console.error('البيانات غير صحيحة:', data);
           setProducts([]);
         }
+        setLoading(false); // ← لا تنسَ إنهاء التحميل
       })
       .catch((err) => {
         console.error('فشل في تحميل المنتجات من Mock API:', err);
+        setProducts([]);
         setLoading(false);
       });
   }, []);
@@ -61,9 +62,9 @@ const Home = () => {
       {/* المنتجات */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
         {loading ? (
-          <p className="text-blue-600">...جارٍ تحميل المنتجات</p>
+          <p className="text-blue-600 col-span-full">...جارٍ تحميل المنتجات</p>
         ) : products.length === 0 ? (
-          <p className="text-red-600">لم يتم العثور على منتجات.</p>
+          <p className="text-red-600 col-span-full">لم يتم العثور على منتجات.</p>
         ) : (
           products.map((product) => (
             <div
@@ -71,14 +72,18 @@ const Home = () => {
               className="border rounded-md p-4 shadow hover:shadow-lg transition flex flex-col justify-between"
             >
               <img
-                src={product.image || 'https://via.placeholder.com/300x200'}
+                src={
+                  product.image && product.image.startsWith('http')
+                    ? product.image
+                    : 'https://via.placeholder.com/300x200'
+                }
                 alt={product.name}
                 className="mb-3 rounded max-h-48 object-cover w-full"
               />
               <h3 className="text-lg font-bold mb-1">{product.name}</h3>
               <p className="text-sm text-gray-600 mb-3">{product.description}</p>
               <div className="flex justify-between items-center mt-auto">
-                <button className="bg-blue-600 text-white px-3 py-1 rounded">شراء</button>
+                <button className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">شراء</button>
                 <div className="flex gap-2 text-blue-600 text-xl">
                   <i className="fas fa-heart cursor-pointer hover:text-red-500"></i>
                   <i className="fas fa-cart-plus cursor-pointer hover:text-green-500"></i>
