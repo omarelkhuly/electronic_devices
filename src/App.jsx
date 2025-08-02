@@ -15,7 +15,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <main className="container my-4">
+      <main>
         <Routes>
           {routes.map((route, i) => (
             <Route key={i} path={route.path} element={route.element} />
