@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   AppBar, Toolbar, IconButton, Typography, Box, Menu, MenuItem,
-  Select, FormControl, InputLabel, Badge, Button, useMediaQuery
+  Select, FormControl, Badge, Button, useMediaQuery
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -14,10 +14,10 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import XIcon from '@mui/icons-material/Close';
-import logo from '../assets/logo.png'; // استخدم شعارك الخاص
+import logo from '../assets/logo.png';
 
 const Header = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const isMobile = useMediaQuery('(max-width:768px)');
   const [language, setLanguage] = useState(i18n.language);
@@ -34,7 +34,6 @@ const Header = () => {
   };
 
   const handleCurrencyChange = (e) => setCurrency(e.target.value);
-
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
   const handleLogout = () => {
@@ -43,11 +42,11 @@ const Header = () => {
   };
 
   const navLinks = [
-    { label: 'بيت', path: '/' },
-    { label: 'منتجات', path: '/products' },
-    { label: 'محل', path: '/shop' },
-    { label: 'الصفحات', path: '/pages' },
-    { label: 'المدونة', path: '/blog' },
+    { label: t('home'), path: '/' },
+    { label: t('products'), path: '/products' },
+    { label: t('shop'), path: '/shop' },
+    { label: t('pages'), path: '/pages' },
+    { label: t('blog'), path: '/blog' },
   ];
 
   return (
@@ -63,7 +62,7 @@ const Header = () => {
         alignItems: 'center',
         flexDirection: isArabic ? 'row-reverse' : 'row',
       }}>
-        {/* يسار */}
+        {/* Left: Language & Currency */}
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <FormControl size="small" sx={{ minWidth: 100 }}>
             <Select value={language} onChange={handleLangChange} sx={{ color: '#fff' }}>
@@ -73,19 +72,19 @@ const Header = () => {
           </FormControl>
           <FormControl size="small" sx={{ minWidth: 130 }}>
             <Select value={currency} onChange={handleCurrencyChange} sx={{ color: '#fff' }}>
-              <MenuItem value="USD">دولار أمريكي 🇺🇸</MenuItem>
-              <MenuItem value="SAR">ريال سعودي 🇸🇦</MenuItem>
-              <MenuItem value="EGP">جنيه مصري 🇪🇬</MenuItem>
+              <MenuItem value="USD">{t('usd')}</MenuItem>
+              <MenuItem value="SAR">{t('sar')}</MenuItem>
+              <MenuItem value="EGP">{t('egp')}</MenuItem>
             </Select>
           </FormControl>
         </Box>
 
-        {/* وسط */}
+        {/* Center: Offer Message */}
         <Typography fontSize={14}>
-          🕘 خصم الصيف يصل إلى 30%!
+          🕘 {t('summerDiscount')}
         </Typography>
 
-        {/* أيقونات تواصل اجتماعي */}
+        {/* Right: Social Icons */}
         <Box sx={{ display: 'flex', gap: 1 }}>
           <InstagramIcon fontSize="small" />
           <PinterestIcon fontSize="small" />
@@ -95,18 +94,18 @@ const Header = () => {
         </Box>
       </Box>
 
-      {/* Navigation */}
+      {/* Navigation Bar */}
       <AppBar position="static" sx={{ backgroundColor: '#000', px: 2 }}>
         <Toolbar sx={{
           flexDirection: isArabic ? 'row-reverse' : 'row',
           justifyContent: 'space-between'
         }}>
-          {/* الشعار */}
+          {/* Logo */}
           <Box>
             <img src={logo} alt="Logo" style={{ height: 40 }} />
           </Box>
 
-          {/* الروابط */}
+          {/* Navigation Links */}
           {!isMobile && (
             <Box sx={{ display: 'flex', gap: 2 }}>
               {navLinks.map((link, idx) => (
@@ -122,7 +121,7 @@ const Header = () => {
             </Box>
           )}
 
-          {/* الأيقونات */}
+          {/* Icons */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <IconButton color="inherit">
               <Badge badgeContent={0} color="primary">
@@ -149,18 +148,18 @@ const Header = () => {
                   transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                   dir={isArabic ? 'rtl' : 'ltr'}
                 >
-                  <MenuItem onClick={handleMenuClose}>الملف الشخصي</MenuItem>
-                  <MenuItem onClick={handleMenuClose}>الإعدادات</MenuItem>
-                  <MenuItem onClick={handleLogout}>تسجيل الخروج</MenuItem>
+                  <MenuItem onClick={handleMenuClose}>{t('profile')}</MenuItem>
+                  <MenuItem onClick={handleMenuClose}>{t('settings')}</MenuItem>
+                  <MenuItem onClick={handleLogout}>{t('logout')}</MenuItem>
                 </Menu>
               </>
             ) : (
               <>
                 <Button component={Link} to="/login" sx={{ color: '#fff' }}>
-                  تسجيل الدخول
+                  {t('login')}
                 </Button>
                 <Button component={Link} to="/register" sx={{ color: '#fff' }}>
-                  إنشاء حساب
+                  {t('register')}
                 </Button>
               </>
             )}

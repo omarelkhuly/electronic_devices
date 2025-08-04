@@ -92,7 +92,7 @@ const Home = () => {
       </div>
 
       {/* ✅ المنتجات */}
-      <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+      <div className="container grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 gap-6 py-4 m-8">
         {loading ? (
           <p className="text-blue-600 col-span-full">{t('loading') || '...جارٍ تحميل المنتجات'}</p>
         ) : products.length === 0 ? (
@@ -101,8 +101,9 @@ const Home = () => {
           products.map(product => (
             <div
               key={product.id}
-              className="border rounded-md p-4 shadow hover:shadow-lg transition flex flex-col justify-between"
+              className="border rounded overflow-hidden shadow-sm hover:shadow-md transition duration-300 flex flex-col bg-dark ms-2 mt-2 p-2"
             >
+              {/* صورة المنتج */}
               <img
                 src={
                   product.image && product.image.startsWith('http')
@@ -110,23 +111,43 @@ const Home = () => {
                     : 'https://via.placeholder.com/300x200'
                 }
                 alt={product.name}
-                className="mb-3 rounded max-h-48 object-cover w-full"
+                className="w-full h-48 object-cover"
               />
-              <h3 className="text-lg font-bold mb-1">{product.name}</h3>
-              <p className="text-sm text-gray-600 mb-3">{product.description}</p>
-              <div className="flex justify-between items-center mt-auto">
-                <button className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
-                  {t('shopNow')}
-                </button>
-                <div className="flex gap-2 text-blue-600 text-xl">
-                  <i className="fas fa-heart cursor-pointer hover:text-red-500"></i>
-                  <i className="fas fa-cart-plus cursor-pointer hover:text-green-500"></i>
+
+              {/* المحتوى */}
+              <div className="p-4 flex flex-col justify-between flex-grow">
+                <h3 className="text-lg font-semibold mb-1 truncate">{product.name}</h3>
+                <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.description}</p>
+
+                {/* السعر والتقييم */}
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-blue-600 font-bold text-base">${product.price}</span>
+                  <div className="text-yellow-500 text-sm">
+                    {Array(5).fill().map((_, i) => (
+                      <i
+                        key={i}
+                        className={`fas fa-star ${i < (product.rating || 4) ? '' : 'text-gray-300'}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* الأزرار */}
+                <div className="flex justify-between items-center">
+                  <button className="bg-blue text-white px-3 py-1 rounded hover:bg-blue">
+                    {t('shopNow')}
+                  </button>
+                  <div className="flex gap-2 text-blue-600 text-lg">
+                    <i className="fas fa-heart cursor-pointer hover:text-red-500"></i>
+                    <i className="fas fa-cart-plus cursor-pointer hover:text-green-500"></i>
+                  </div>
                 </div>
               </div>
             </div>
           ))
         )}
       </div>
+
     </div>
   );
 };
